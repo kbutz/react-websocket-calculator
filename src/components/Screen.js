@@ -4,14 +4,8 @@ import PropTypes from 'prop-types';
 
 function Screen(props) {
   return (
-    <div className="screen row">
-      <input className="row col-xs-12" type="text" readOnly value={props.screenValue}/>
-    </div>
+    <h1>{props.screenValue}</h1>
   );
 }
-
-Screen.propTypes = {
-  value: PropTypes.string,
-};
 
 export default Screen;

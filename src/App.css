@@ -26,3 +26,88 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.buttons-wrapper {
+  min-height: 40vh;
+}
+h1 {
+  background-color: #333;
+  color: white;
+  margin: 0;
+  padding: 1rem;
+  font-size: 4rem;
+}
+button {
+  font-size: 2rem;
+  border: 1px solid #333;
+}
+.modifiers button {
+  background-color: #ccc;
+}
+.operations button {
+  background-color: orange;
+}
+.digits button {
+  background-color: #efefef;
+}
+
+/* All things Grid, Flexbox, Box Alignment */
+.buttons-wrapper, .subgrid {
+  display: grid;
+}
+
+.buttons-wrapper {
+  grid-template-areas:
+    "total total total total"
+    "modif modif modif oper"
+    "digit digit digit oper"
+    "digit digit digit oper"
+    "digit digit digit oper"
+    "digit digit digit oper";
+  grid-auto-columns: 1fr;
+}
+h1 {
+  grid-area: total;
+}
+.modifiers {
+  grid-area: modif;
+}
+.operations {
+  grid-area: oper;
+}
+.digits {
+  grid-area: digit;
+}
+
+h1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.modifiers {
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}
+
+.digits {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+.digits button {
+  flex: 1 0 30%;
+}
+.digits .wide {
+  flex: 2 0 60%;
+  order: 1;
+}
+
+.calculator-log {
+  font-size: 2rem;
+  border: 1px solid #333;
+}
+
+.calculator-log ul{
+  list-style-type:none;
+}

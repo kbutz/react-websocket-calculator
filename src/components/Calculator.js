@@ -24,7 +24,12 @@ class Calculator extends React.Component {
     switch (i) {
       case '=': { // if it's an equal sign, use the eval module to evaluate the question
         // convert the answer (in number) to String
-        const answer = eval(this.state.screenValue).toString();
+        let answer = '';
+        try {
+          answer = eval(this.state.screenValue).toString();
+        } catch(err) {
+          answer = "Error Encountered";
+        }
         // update answer in our state.
         const output = value + answer;
         this.ws.send('{"message":"' + output + '"}')
@@ -74,17 +79,11 @@ class Calculator extends React.Component {
 
     return (
       <div className="row">
-        <div className=" frame col-xs-8 col-xs-offset-2">
-          <div className="calculator-title row">
-            R_N Calculator
-          </div>
-          <Screen screenValue={this.state.screenValue} />
-          <Buttons handleClick={this.handleClick}/>
-        </div>
+        <Screen screenValue={this.state.screenValue == '' ? '0' : this.state.screenValue} />
+        <Buttons handleClick={this.handleClick}/>
 
         {/* TODO: EntryLog component */}
-        <div className="container">
-          <div className="log">
+        <div className="calculator-log">
             <ul>
               {this.state.error &&
               <li>
@@ -93,7 +92,6 @@ class Calculator extends React.Component {
               </li>}
               {showHistory}
             </ul>
-          </div>
         </div>
       </div>
     );
@@ -103,7 +101,7 @@ class Calculator extends React.Component {
 // this.ws.onopen = e => this.setState({history: this.state.history.concat([{msg: '{"message":"Connection Opened"}'}])})
 
   componentDidMount() {
-      this.ws = new WebSocket('ws://' + 'localhost:8000' + '/ws')
+      this.ws = new WebSocket('ws://' + document.location.host + '/ws')
       this.ws.onmessage = e => this.setState({history: this.state.history.concat([{msg: Object.values(JSON.parse(e.data))}])})
       this.ws.onerror = e => this.setState({ error: 'WebSocket error' })
       this.ws.onclose = e => !e.wasClean && this.setState({ error: `WebSocket error: ${e.code} ${e.reason}` })
