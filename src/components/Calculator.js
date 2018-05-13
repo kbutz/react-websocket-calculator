@@ -87,8 +87,7 @@ class Calculator extends React.Component {
             <ul>
               {this.state.error &&
               <li>
-                <a onClick={() => this.setState({ error: null })} className="pull-right">x</a>
-                {this.state.error}
+                {this.state.error} - Connection closed, try refreshing your browser.
               </li>}
               {showHistory}
             </ul>
